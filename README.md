@@ -1,4 +1,3 @@
-## Projeto desenvolvimento do jogo Snake 🐍 
+# Projeto desenvolvimento do jogo Snake 🐍
 
-### Snake Game usando javascript, html e css.
-
+ ##Snake Game usando javascript, html e css.
