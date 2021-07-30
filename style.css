@@ -1,11 +1,47 @@
+* {
+    padding:0;
+    color: #b1acac;
+}
+
 body{
+    margin-top: 10px;
     height: 95vh;
     width: 95vw;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color:WhiteSmoke;
-    color: darkmagenta;
+    background-color:rgb(63, 61, 61);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.name-gm {
+    display:flex;
+    height: 50px;
+    margin-left: 20px;
+    width: 50%;
+    justify-content: left;
+    align-items: center;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border: 1px solid white;
+    border-radius: 3%;
+    width: 100%;
+}
+
+#points {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-weight: 800;
+}
+
+.wrapper {
+    display: block;
 }

@@ -6,29 +6,46 @@
 // variaveis globais definição da janela principal do jogo e bloco de contrução do cobra.
 let canvas = document.getElementById( "snake" );
 let context = canvas.getContext("2d");
+let imgbg = new Image();
+imgbg.src = "img/img-bkg.jpeg";
+let imgskin = new Image();
+imgskin.src = "img/skin.jpeg";
+let imgfood = new Image();
+imgfood.src = "img/food.jpeg";
 let direction = "down"; // Definição de variaveis de movimento da cobra
 let box = 32;
-let snake = [];  //Define o corpo da cobra com as dimensões 8 * box
-
+let snake = [];  //Define o corpo da cobra com as dimensões 8 * 
 snake[0] = {
     x: 8 * box,
     y: 8 * box 
 }
+let food = {
+    x: Math.floor(Math.random() * 14 + 1) * box,
+    y: Math.floor(Math.random() * 14 + 1) * box 
+};
 
 document.addEventListener('keydown', update);
-setInterval(gameStart, 500);
+let game = setInterval(gameStart, 200);
 
 // Criação da janela principal do jogo e do elemento basico que compõe a cobra. 
 function criarBG() {
-    context.fillStyle = "Lightgreen";
+    let pattern = context.createPattern(imgbg, "repeat");
+    context.fillStyle = pattern;
     context.fillRect (0, 0, 16 * box, 16 * box);
 }
 // cria a cobrinha 
 function criaSnake() {
     for( i=0 ; i < snake.length ; i++ ) {
-        context.fillStyle = "green";
+        let pattern = context.createPattern(imgskin, "repeat");
+        context.fillStyle = pattern;
         context.fillRect (snake[i].x , snake[i].y, box, box);
     }
+}
+
+function drawFood() {
+    let pattern = context.createPattern(imgfood, "repeat");
+    context.fillStyle = pattern;
+    context.fillRect(food.x, food.y, box, box);  
 }
 
 function update(event) {
@@ -49,14 +66,22 @@ function update(event) {
 function moveSnake() {
     let snakeX = snake[0].x;
     let snakeY = snake[0].y;
+    let pts = 0;
 
     if(direction == "right") snakeX += box;
     if(direction == "left") snakeX -= box;
     if(direction == "up") snakeY -= box;
     if(direction == "down") snakeY += box;
 
-    snake.pop();
-
+    if( snakeX != food.x || snakeY != food.y) {
+        snake.pop();
+        pts = (i - 1) * 10;
+        document.getElementById("points").innerText = "Pontos: " + pts;
+    } else {
+        food.x = Math.floor(Math.random() * 14 + 1) * box;
+        food.y = Math.floor(Math.random() * 14 + 1) * box;
+    }
+    
     let newHead = {
         x: snakeX,
         y: snakeY
@@ -72,9 +97,20 @@ function infinityWall () {
     
 }
 
-function gameStart(){    
+function gameOver() {
+    for (i = 1; i < snake.length; i++ ) {
+        if (snake[0].x == snake[i].x && snake[0].y == snake[i].y ) {
+            clearInterval(game);
+            alert( 'Game Over :( ');
+        } 
+    }
+} 
+
+function gameStart(){   
     infinityWall()
+    gameOver()
     criarBG()
     criaSnake()
+    drawFood() 
     moveSnake()
 }
